@@ -1,10 +1,6 @@
-<div align="center">
-
 # asdf-jetbrains-idea [![Build](https://github.com/mbutov/asdf-jetbrains-idea/actions/workflows/build.yml/badge.svg)](https://github.com/mbutov/asdf-jetbrains-idea/actions/workflows/build.yml) [![Lint](https://github.com/mbutov/asdf-jetbrains-idea/actions/workflows/lint.yml/badge.svg)](https://github.com/mbutov/asdf-jetbrains-idea/actions/workflows/lint.yml)
 
 [jetbrains-idea](https://github.com/mbutov/asdf-jetbrains-idea) plugin for the [asdf version manager](https://asdf-vm.com).
-
-</div>
 
 # Contents
 
@@ -15,10 +11,8 @@
 
 # Dependencies
 
-**TODO: adapt this section**
-
 - `bash`, `curl`, `tar`, and [POSIX utilities](https://pubs.opengroup.org/onlinepubs/9699919799/idx/utilities.html).
-- `SOME_ENV_VAR`: set this environment variable in your shell config to load the correct version of tool x.
+- `jq` - commandline JSON processor
 
 # Install
 
