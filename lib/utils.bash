@@ -14,34 +14,35 @@ fail() {
 }
 
 platform() {
-		KERNEL_NAME="$(uname -s)"
-		MACHINE="$(uname -m)"
+	local kernel machine
+	kernel="$(uname -s)"
+	machine="$(uname -m)"
 
-		case "${KERNEL_NAME}" in
-				Darwin)
-						case "${MACHINE}" in
-								aarch64|arm64)
-										echo "macM1"
-										;;
-								*)
-										echo "mac"
-										;;
-						esac
-						;;
-				Linux)
-						case "${MACHINE}" in
-								aarch64|arm64)
-										echo "linuxARM64"
-										;;
-								*)
-										echo "linux"
-										;;
-						esac
-						;;
-				*)
-						fail "Unknown operating system: ${KERNEL_NAME}"
-						;;
+	case "${kernel}" in
+	Darwin)
+		case "${machine}" in
+		aarch64 | arm64)
+			echo "macM1"
+			;;
+		*)
+			echo "mac"
+			;;
 		esac
+		;;
+	Linux)
+		case "${machine}" in
+		aarch64 | arm64)
+			echo "linuxARM64"
+			;;
+		*)
+			echo "linux"
+			;;
+		esac
+		;;
+	*)
+		fail "Unknown operating system: ${kernel}"
+		;;
+	esac
 }
 
 curl_opts=(-fsSL)
@@ -57,7 +58,7 @@ list_all_versions() {
 }
 
 download_release() {
-	local version filename url
+	local version filename platform url
 	version="$1"
 	filename="$2"
 
