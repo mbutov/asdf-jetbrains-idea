@@ -14,33 +14,15 @@ fail() {
 }
 
 platform() {
-	local kernel machine
-	kernel="$(uname -s)"
+	local machine
 	machine="$(uname -m)"
 
-	case "${kernel}" in
-	Darwin)
-		case "${machine}" in
-		aarch64 | arm64)
-			echo "macM1"
-			;;
-		*)
-			echo "mac"
-			;;
-		esac
-		;;
-	Linux)
-		case "${machine}" in
-		aarch64 | arm64)
-			echo "linuxARM64"
-			;;
-		*)
-			echo "linux"
-			;;
-		esac
+	case "${machine}" in
+	aarch64 | arm64)
+		echo "linuxARM64"
 		;;
 	*)
-		fail "Unknown operating system: ${kernel}"
+		echo "linux"
 		;;
 	esac
 }
