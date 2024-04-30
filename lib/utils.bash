@@ -54,7 +54,7 @@ sort_versions() {
 
 list_all_versions() {
 	curl "${curl_opts[@]}" "https://data.services.jetbrains.com/products?code=${JETBRAINS_PRODUCT_CODE}&release.type=release" |
-		jq -r '.[] | select(.code=="'${JETBRAINS_PRODUCT_CODE}'") | .releases.[] | select(.downloads!={}) | .version'
+		jq -r '.[] | select(.code=="'${JETBRAINS_PRODUCT_CODE}'") | .releases | .[] | select(.downloads!={}) | .version'
 }
 
 download_release() {
@@ -66,7 +66,7 @@ download_release() {
 
 	url=$(
 		curl "${curl_opts[@]}" "https://data.services.jetbrains.com/products?code=${JETBRAINS_PRODUCT_CODE}&release.type=release" |
-			jq -r '.[] | select(.code=="'${JETBRAINS_PRODUCT_CODE}'") | .releases.[] | select(.version=="'${version}'") | .downloads.'${platform}'.link'
+			jq -r '.[] | select(.code=="'${JETBRAINS_PRODUCT_CODE}'") | .releases | .[] | select(.version=="'${version}'") | .downloads.'${platform}'.link'
 	)
 
 	echo "* Downloading $TOOL_NAME release $version..."
