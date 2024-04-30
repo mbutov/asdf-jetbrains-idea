@@ -13,6 +13,37 @@ fail() {
 	exit 1
 }
 
+platform() {
+		KERNEL_NAME="$(uname -s)"
+		MACHINE="$(uname -m)"
+
+		case "${KERNEL_NAME}" in
+				Darwin)
+						case "${MACHINE}" in
+								aarch64|arm64)
+										echo "macM1"
+										;;
+								*)
+										echo "mac"
+										;;
+						esac
+						;;
+				Linux)
+						case "${MACHINE}" in
+								aarch64|arm64)
+										echo "linuxARM64"
+										;;
+								*)
+										echo "linux"
+										;;
+						esac
+						;;
+				*)
+						fail "Unknown operating system: ${KERNEL_NAME}"
+						;;
+		esac
+}
+
 curl_opts=(-fsSL)
 
 sort_versions() {
@@ -22,7 +53,7 @@ sort_versions() {
 
 list_all_versions() {
 	curl "${curl_opts[@]}" "https://data.services.jetbrains.com/products?code=${JETBRAINS_PRODUCT_CODE}&release.type=release" |
-		jq -r '.[] | select(.code=="'${JETBRAINS_PRODUCT_CODE}'") | .releases | .[] | select(.downloads!={}) | .version'
+		jq -r '.[] | select(.code=="'${JETBRAINS_PRODUCT_CODE}'") | .releases.[] | select(.downloads!={}) | .version'
 }
 
 download_release() {
@@ -30,9 +61,11 @@ download_release() {
 	version="$1"
 	filename="$2"
 
+	platform=$(platform)
+
 	url=$(
 		curl "${curl_opts[@]}" "https://data.services.jetbrains.com/products?code=${JETBRAINS_PRODUCT_CODE}&release.type=release" |
-			jq -r '.[] | select(.code=="'${JETBRAINS_PRODUCT_CODE}'") | .releases | .[] | select(.version=="'${version}'") | .downloads.linux.link'
+			jq -r '.[] | select(.code=="'${JETBRAINS_PRODUCT_CODE}'") | .releases.[] | select(.version=="'${version}'") | .downloads.'${platform}'.link'
 	)
 
 	echo "* Downloading $TOOL_NAME release $version..."
