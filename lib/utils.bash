@@ -2,11 +2,11 @@
 
 set -euo pipefail
 
-# GH_REPO="https://github.com/mbutov/asdf-jetbrains-idea"
 TOOL_NAME="idea"
 TOOL_TEST="bin/idea.sh --version"
 
 JETBRAINS_PRODUCT_CODE="IIU"
+SHIMS_DIR_NAME=shims
 
 fail() {
 	echo -e "asdf-${TOOL_NAME}: $*"
@@ -71,6 +71,9 @@ install_version() {
 		local tool_cmd
 		tool_cmd="$(echo "${TOOL_TEST}" | cut -d' ' -f1)"
 		test -x "${install_path}/${tool_cmd}" || fail "Expected ${install_path}/${tool_cmd} to be executable."
+
+		mkdir "${install_path}/${SHIMS_DIR_NAME}"
+		ln -rs "${install_path}/${tool_cmd}" "${ASDF_INSTALL_PATH}/${SHIMS_DIR_NAME}/${TOOL_NAME}"
 
 		echo "${TOOL_NAME} ${version} installation was successful!"
 	) || (
