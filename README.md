@@ -19,25 +19,25 @@
 Plugin:
 
 ```shell
-asdf plugin add jetbrains-idea
+asdf plugin add idea
 # or
-asdf plugin add jetbrains-idea https://github.com/mbutov/asdf-jetbrains-idea.git
+asdf plugin add idea https://github.com/mbutov/asdf-jetbrains-idea.git
 ```
 
-jetbrains-idea:
+idea:
 
 ```shell
 # Show all installable versions
-asdf list-all jetbrains-idea
+asdf list-all idea
 
 # Install specific version
-asdf install jetbrains-idea latest
+asdf install idea latest
 
 # Set a version globally (on your ~/.tool-versions file)
-asdf global jetbrains-idea latest
+asdf global idea latest
 
-# Now jetbrains-idea commands are available
-idea.sh --version
+# Now idea command is available
+idea --version
 ```
 
 Check [asdf](https://github.com/asdf-vm/asdf) readme for more instructions on how to
