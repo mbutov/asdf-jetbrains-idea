@@ -73,7 +73,9 @@ install_version() {
 		test -x "${install_path}/${tool_cmd}" || fail "Expected ${install_path}/${tool_cmd} to be executable."
 
 		mkdir "${install_path}/${SHIMS_DIR_NAME}"
-		ln -rs "${install_path}/${tool_cmd}" "${ASDF_INSTALL_PATH}/${SHIMS_DIR_NAME}/${TOOL_NAME}"
+		pushd "${install_path}/${SHIMS_DIR_NAME}"
+		ln -s "../${tool_cmd}" "${TOOL_NAME}"
+		popd
 
 		echo "${TOOL_NAME} ${version} installation was successful!"
 	) || (
